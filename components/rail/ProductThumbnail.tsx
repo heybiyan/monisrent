@@ -17,7 +17,7 @@ type ProductThumbnailProps = {
 
 export function ProductThumbnail({ item }: ProductThumbnailProps) {
   const { selectedDesk, placedItems, addItem, swapDesk } = useBuilder();
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [imgError, setImgError] = useState(false);
 
   const isDesk = "desk_id" in item;
   const isSelected = isDesk
@@ -79,14 +79,21 @@ export function ProductThumbnail({ item }: ProductThumbnailProps) {
         </Badge>
       </div>
 
-      {/* Thumbnail Asset Placeholder / Skeleton Box */}
+      {/* Thumbnail Asset Container */}
       <div className="relative w-full h-28 my-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-2 overflow-hidden group-hover:scale-[1.02] transition-transform">
-        {!isLoaded ? (
-          <SkeletonBlock className="w-full h-full" />
+        {!imgError && item.asset?.url ? (
+          <img
+            src={item.asset.url}
+            alt={item.name}
+            onError={() => setImgError(true)}
+            className="w-full h-full object-contain pointer-events-none select-none drop-shadow-sm"
+          />
         ) : (
           <div className="w-16 h-16 rounded-lg bg-gradient-to-tr from-slate-200 to-slate-100 border border-slate-300/60 flex flex-col items-center justify-center text-slate-500 font-bold text-xs shadow-inner gap-0.5">
             <span>{item.name.slice(0, 3).toUpperCase()}</span>
-            <span className="text-[9px] font-normal text-text-muted">{isDesk ? "DESK" : item.slot_type.toUpperCase()}</span>
+            <span className="text-[9px] font-normal text-text-muted">
+              {isDesk ? "DESK" : item.slot_type.toUpperCase()}
+            </span>
           </div>
         )}
       </div>

@@ -20,6 +20,7 @@
     "name": "Dell UltraSharp 27\" 4K Monitor",
     "category": "monitors",
     "slot_type": "monitor",
+    "preferred_side": "center",
     "price_per_week": 18,
     "original_price_per_week": 22,
     "real_width_cm": 61,
@@ -36,6 +37,7 @@
     "name": "LG UltraWide 34\" Curved Monitor",
     "category": "monitors",
     "slot_type": "monitor",
+    "preferred_side": "center",
     "price_per_week": 28,
     "real_width_cm": 81,
     "real_height_cm": 46,
@@ -51,13 +53,15 @@
     "name": "MacBook Pro 16\" M3 Max",
     "category": "computer",
     "slot_type": "accessory",
+    "preferred_side": "left",
     "price_per_week": 35,
     "real_width_cm": 35,
     "real_height_cm": 25,
     "asset": {
       "url": "/assets/computer/macbook-pro-16.png",
       "width_px": 250,
-      "height_px": 180
+      "height_px": 180,
+      "base_offset_pct": 0.20
     },
     "stock_status": "available"
   },
@@ -66,13 +70,15 @@
     "name": "Mac Studio M2 Ultra",
     "category": "computer",
     "slot_type": "accessory",
+    "preferred_side": "right",
     "price_per_week": 42,
     "real_width_cm": 20,
     "real_height_cm": 20,
     "asset": {
       "url": "/assets/computer/mac-studio.png",
       "width_px": 150,
-      "height_px": 150
+      "height_px": 150,
+      "base_offset_pct": 0.0
     },
     "stock_status": "available"
   }

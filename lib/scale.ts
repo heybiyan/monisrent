@@ -49,21 +49,36 @@ export function computePosition(
   deskRenderedHeightPx: number,
   itemWidthPx: number,
   itemHeightPx: number,
-  slotIndex: number = 0
+  slotIndex: number = 0,
+  product?: Product
 ): RenderPosition {
-  // Base anchor point in pixels
-  let anchorXPx = deskRenderedWidthPx * slotConfig.anchor_x;
-  let anchorYPx = deskRenderedHeightPx * slotConfig.anchor_y;
-
-  // If slot supports multiple items (e.g., accessories), offset horizontally per item index
-  if (slotIndex > 0) {
-    const offsetPx = itemWidthPx * 0.85 * slotIndex;
-    anchorXPx += slotIndex % 2 === 1 ? offsetPx : -offsetPx;
+  // Determine anchor_x ratio:
+  // If product specifies preferred_side "left", anchor_x = 0.22 (left side of desk)
+  // If product specifies preferred_side "right", anchor_x = 0.78 (right side of desk)
+  let anchorXRatio = slotConfig.anchor_x;
+  if (product?.preferred_side === "left") {
+    anchorXRatio = 0.22;
+  } else if (product?.preferred_side === "right") {
+    anchorXRatio = 0.78;
+  } else if (slotConfig.max_items && slotConfig.max_items > 1) {
+    anchorXRatio = slotIndex === 0 ? 0.22 : 0.78;
   }
 
-  // Center product image around anchor point
+  let anchorXPx = deskRenderedWidthPx * anchorXRatio;
+  let anchorYPx = deskRenderedHeightPx * slotConfig.anchor_y;
+
   const leftPx = anchorXPx - itemWidthPx / 2;
-  const topPx = anchorYPx - itemHeightPx / 2;
+
+  // Base vertical alignment:
+  let topPx = anchorYPx - itemHeightPx;
+  if (slotConfig.anchor_align_v === "center") {
+    topPx = anchorYPx - itemHeightPx / 2;
+  }
+
+  // Apply fine-tuned asset base offset if specified (e.g. for pixel-perfect feet alignment with M2 reference)
+  if (product?.asset?.base_offset_pct) {
+    topPx += itemHeightPx * product.asset.base_offset_pct;
+  }
 
   return { leftPx, topPx };
 }
