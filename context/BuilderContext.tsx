@@ -77,7 +77,7 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
     [allDesks]
   );
 
-  // Add or Replace item
+  // Add or Replace item without maximum limit blocking
   const addItem = useCallback(
     (product: Product) => {
       if (product.stock_status === "unavailable") {
@@ -86,13 +86,8 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
       }
 
       const slotType = product.slot_type;
-      const slotConfig = selectedDesk.slots[slotType];
-      const maxItems = slotConfig?.max_items ?? 1;
 
       setPlacedItems((prev) => {
-        // Filter items with same slot type
-        const existingInSlot = prev.filter((item) => item.slot_type === slotType);
-
         // Check if item is already placed
         const isAlreadyPlaced = prev.some((item) => item.product_id === product.product_id);
         if (isAlreadyPlaced) {
@@ -100,24 +95,16 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
           return prev.filter((item) => item.product_id !== product.product_id);
         }
 
-        if (maxItems === 1) {
-          // Replace single slot item (e.g., chair or monitor)
+        if (slotType === "chair" || slotType === "monitor") {
+          // Swap single slot item (e.g., chair or monitor)
           const remainingOtherSlots = prev.filter((item) => item.slot_type !== slotType);
           return [
             ...remainingOtherSlots,
             { product_id: product.product_id, slot_type: slotType, slot_index: 0 },
           ];
         } else {
-          // Slot allows max_items > 1 (e.g. accessories)
-          if (existingInSlot.length >= maxItems) {
-            showToast(
-              `Maximum limit reached! Only ${maxItems} ${slotType} item${
-                maxItems > 1 ? "s" : ""
-              } allowed on this setup.`
-            );
-            return prev;
-          }
-
+          // Allow adding multiple accessories freely without limit restriction
+          const existingInSlot = prev.filter((item) => item.slot_type === slotType);
           const slotIndex = existingInSlot.length;
           return [
             ...prev,
@@ -126,7 +113,7 @@ export function BuilderProvider({ children }: { children: React.ReactNode }) {
         }
       });
     },
-    [selectedDesk, showToast]
+    [showToast]
   );
 
   // Remove item

@@ -16,6 +16,22 @@
     "stock_status": "available"
   },
   {
+    "product_id": "chair-executive-mesh",
+    "name": "Executive Mesh Pro Chair",
+    "category": "furniture",
+    "slot_type": "chair",
+    "price_per_week": 22,
+    "original_price_per_week": 28,
+    "real_width_cm": 70,
+    "real_height_cm": 120,
+    "asset": {
+      "url": "/assets/chair/chair-executive-mesh.png",
+      "width_px": 320,
+      "height_px": 520
+    },
+    "stock_status": "available"
+  },
+  {
     "product_id": "monitor-dell-27",
     "name": "Dell UltraSharp 27\" 4K Monitor",
     "category": "monitors",
@@ -39,6 +55,7 @@
     "slot_type": "monitor",
     "preferred_side": "center",
     "price_per_week": 28,
+    "original_price_per_week": 46,
     "real_width_cm": 81,
     "real_height_cm": 46,
     "asset": {
@@ -79,6 +96,44 @@
       "width_px": 150,
       "height_px": 150,
       "base_offset_pct": 0.0
+    },
+    "stock_status": "available"
+  },
+  {
+    "product_id": "lamp-bar-benq",
+    "name": "ScreenBar LED Monitor Light",
+    "category": "office-accessories",
+    "slot_type": "accessory",
+    "anchor_target": "monitor_top",
+    "preferred_side": "monitor_top",
+    "price_per_week": 5,
+    "real_width_cm": 45,
+    "real_height_cm": 10,
+    "asset": {
+      "url": "/assets/accessory/lamp-bar-benq.png",
+      "width_px": 300,
+      "height_px": 80,
+      "base_offset_pct": -0.45
+    },
+    "stock_status": "available"
+  },
+  {
+    "product_id": "plant-monstera-potted",
+    "name": "Potted Monstera Plant",
+    "category": "office-accessories",
+    "slot_type": "accessory",
+    "anchor_target": "floor",
+    "preferred_side": "floor_left",
+    "z_index_override": 5,
+    "price_per_week": 6,
+    "real_width_cm": 55,
+    "real_height_cm": 70,
+    "asset": {
+      "url": "/assets/accessory/plan-montserra-potted.png",
+      "width_px": 200,
+      "height_px": 250,
+      "base_offset_pct": 0.60,
+      "x_offset_pct": -0.20
     },
     "stock_status": "available"
   }

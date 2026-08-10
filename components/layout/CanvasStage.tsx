@@ -99,10 +99,12 @@ export function CanvasStage() {
               widthPx,
               heightPx,
               item.slot_index ?? 0,
-              product
+              product,
+              selectedDesk
             );
 
             const isImgError = itemImgErrors[product.product_id];
+            const itemZIndex = product.z_index_override ?? (product.anchor_target === "monitor_top" ? 5 : slotConfig.z_index);
 
             return (
               <div
@@ -113,7 +115,7 @@ export function CanvasStage() {
                   top: `${topPx}px`,
                   width: `${widthPx}px`,
                   height: `${heightPx}px`,
-                  zIndex: slotConfig.z_index,
+                  zIndex: itemZIndex,
                 }}
                 className="group cursor-pointer transition-all duration-300 animate-in fade-in zoom-in-95 hover:scale-[1.03]"
               >

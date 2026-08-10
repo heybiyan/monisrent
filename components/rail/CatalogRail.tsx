@@ -40,7 +40,7 @@ export function CatalogRail() {
           <h3 className="text-sm font-bold text-text-primary">Add Setup Items</h3>
         </div>
         <span className="text-[11px] font-medium text-text-secondary">
-          4 Categories
+          5 Categories
         </span>
       </div>
 

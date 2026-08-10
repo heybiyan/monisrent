@@ -37,6 +37,7 @@ export type ProductAsset = {
   width_px: number;
   height_px: number;
   base_offset_pct?: number;
+  x_offset_pct?: number;
 };
 
 export type Product = {
@@ -44,7 +45,9 @@ export type Product = {
   name: string;
   category: ProductCategory;
   slot_type: SlotType;
-  preferred_side?: "left" | "right" | "center";
+  preferred_side?: "left" | "right" | "center" | "floor_left" | "floor_right" | "monitor_top";
+  anchor_target?: "desk_surface" | "floor" | "monitor_top";
+  z_index_override?: number;
   price_per_week: number;
   original_price_per_week?: number;
   real_width_cm: number;

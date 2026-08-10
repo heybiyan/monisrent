@@ -1,8 +1,8 @@
 import React from "react";
 import { clsx } from "clsx";
-import { Table, Armchair, Monitor, Laptop, LucideIcon } from "lucide-react";
+import { Table, Armchair, Monitor, Laptop, Sparkles, LucideIcon } from "lucide-react";
 
-export type CategoryId = "desk" | "chair" | "monitors" | "computer";
+export type CategoryId = "desk" | "chair" | "monitors" | "computer" | "office-accessories";
 
 export type CategoryOption = {
   id: CategoryId;
@@ -15,6 +15,7 @@ export const CATEGORIES: CategoryOption[] = [
   { id: "chair", label: "Chair", icon: Armchair },
   { id: "monitors", label: "Monitor", icon: Monitor },
   { id: "computer", label: "Computer", icon: Laptop },
+  { id: "office-accessories", label: "Accessories", icon: Sparkles },
 ];
 
 type CategoryTabProps = {
