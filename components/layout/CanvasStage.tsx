@@ -1,70 +1,147 @@
-import React from "react";
-import { Monitor, Armchair, Box } from "lucide-react";
+"use client";
+
+import React, { useRef, useState, useEffect } from "react";
+import { useBuilder } from "@/context/BuilderContext";
+import { computeScale, computePosition } from "@/lib/scale";
+import { X, Sparkles, Layers } from "lucide-react";
 
 export function CanvasStage() {
+  const { selectedDesk, placedItems, placedProducts, removeItem } = useBuilder();
+  const deskContainerRef = useRef<HTMLDivElement>(null);
+
+  const [deskBounds, setDeskBounds] = useState({ widthPx: 640, heightPx: 320 });
+
+  // Measure desk container width dynamically on resize
+  useEffect(() => {
+    const updateBounds = () => {
+      if (deskContainerRef.current) {
+        const rect = deskContainerRef.current.getBoundingClientRect();
+        setDeskBounds({ widthPx: rect.width, heightPx: rect.height });
+      }
+    };
+
+    updateBounds();
+    window.addEventListener("resize", updateBounds);
+    return () => window.removeEventListener("resize", updateBounds);
+  }, []);
+
   return (
-    <div className="relative w-full h-[calc(100vh-65px)] min-h-[500px] overflow-hidden bg-gradient-to-br from-slate-100 via-emerald-50/20 to-slate-200/80 flex items-center justify-center p-6">
-      {/* Studio Ambient Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.8),transparent_70%)] pointer-events-none" />
-      
-      {/* Floor Grid Accent */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+    <div className="relative w-full h-[calc(100vh-65px)] min-h-[560px] overflow-hidden bg-gradient-to-br from-slate-100 via-emerald-50/25 to-slate-200/90 flex items-center justify-center p-4 sm:p-8">
+      {/* Studio Ambient Background Lighting */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.85),transparent_75%)] pointer-events-none" />
+
+      {/* Grid Floor Overlay Accent */}
+      <div
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
+          backgroundSize: "48px 48px",
         }}
       />
 
-      {/* Interactive Studio Stage Container */}
-      <div className="relative w-full max-w-4xl aspect-[16/9] bg-white/40 backdrop-blur-sm rounded-3xl border border-white/60 shadow-xl flex items-center justify-center p-8 transition-all">
+      {/* Studio Stage Board */}
+      <div className="relative w-full max-w-4xl aspect-[16/10] sm:aspect-[16/9] bg-white/40 backdrop-blur-md rounded-3xl border border-white/70 shadow-2xl flex flex-col items-center justify-end p-6 sm:p-12 overflow-visible">
         
-        {/* Desk Placeholder Stage */}
-        <div className="relative w-full h-full flex flex-col items-center justify-end pb-8">
-          
-          {/* Main Desk Illustration Container */}
-          <div className="relative w-3/4 h-48 bg-gradient-to-b from-amber-100/90 to-amber-200/90 rounded-2xl border-4 border-amber-800/20 shadow-2xl flex flex-col items-center justify-center gap-2 group transition-transform hover:scale-[1.01]">
-            {/* Desk Surface Texture */}
-            <div className="absolute top-0 left-0 right-0 h-4 bg-amber-200/60 rounded-t-xl border-b border-amber-300/40" />
+        {/* Active Desk Container */}
+        <div
+          ref={deskContainerRef}
+          className="relative w-4/5 sm:w-3/4 h-56 sm:h-64 bg-gradient-to-b from-amber-100/95 via-amber-200/90 to-amber-300/80 rounded-2xl border-4 border-amber-900/20 shadow-2xl transition-all duration-500 flex flex-col items-center justify-center"
+        >
+          {/* Desk Wood Grain Texture Top Bar */}
+          <div className="absolute top-0 left-0 right-0 h-4 bg-amber-200/80 rounded-t-xl border-b border-amber-300/60 shadow-inner" />
 
-            {/* Placeholder Items Overlay Indicators */}
-            <div className="flex items-center justify-center gap-6 text-amber-900/60 z-10">
-              <div className="flex flex-col items-center gap-1">
-                <Monitor className="w-8 h-8 stroke-[1.5]" />
-                <span className="text-[11px] font-medium">Monitor Slot</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <Box className="w-6 h-6 stroke-[1.5]" />
-                <span className="text-[11px] font-medium">Accessory Slot</span>
-              </div>
-            </div>
-
-            <div className="text-xs font-semibold text-amber-950 bg-amber-50/80 px-3 py-1 rounded-full border border-amber-300/50 shadow-sm z-10">
-              Electric Adjustable Desk Pro (160x80cm)
-            </div>
-
-            {/* Desk Legs Placeholder */}
-            <div className="absolute -bottom-16 left-12 w-6 h-20 bg-slate-800 rounded-b-md shadow-md" />
-            <div className="absolute -bottom-16 right-12 w-6 h-20 bg-slate-800 rounded-b-md shadow-md" />
+          {/* Desk Information Label */}
+          <div className="absolute bottom-3 bg-amber-950/80 backdrop-blur-md text-amber-5 px-3 py-1 rounded-full text-[11px] font-semibold border border-amber-800/40 shadow-sm z-10 flex items-center gap-1.5 text-white">
+            <Sparkles className="w-3 h-3 text-amber-400" />
+            <span>{selectedDesk.name} ({selectedDesk.real_width_cm}×{selectedDesk.real_height_cm}cm)</span>
           </div>
 
-          {/* Chair Placeholder behind/below */}
-          <div className="absolute bottom-2 flex flex-col items-center text-slate-400 gap-1 opacity-75">
-            <Armchair className="w-10 h-10 stroke-[1.5] text-slate-600" />
-            <span className="text-[10px] font-medium bg-white/70 px-2 py-0.5 rounded-full border border-slate-200">
-              Chair Slot
-            </span>
-          </div>
+          {/* Desk Metal Legs */}
+          <div className="absolute -bottom-20 left-10 w-7 h-24 bg-slate-800 rounded-b-lg shadow-xl" />
+          <div className="absolute -bottom-20 right-10 w-7 h-24 bg-slate-800 rounded-b-lg shadow-xl" />
 
-          {/* Realistic Soft Shadow beneath setup */}
-          <div className="absolute -bottom-4 w-4/5 h-8 bg-black/15 blur-xl rounded-full pointer-events-none" />
+          {/* Render Placed Items using Anchor & Scale formulas */}
+          {placedItems.map((item) => {
+            const product = placedProducts.find((p) => p.product_id === item.product_id);
+            if (!product) return null;
+
+            const slotConfig = selectedDesk.slots[item.slot_type] || {
+              anchor_x: 0.5,
+              anchor_y: 0.5,
+              max_width_pct: 0.4,
+              z_index: 2,
+            };
+
+            const { widthPx, heightPx } = computeScale(
+              product,
+              selectedDesk,
+              deskBounds.widthPx
+            );
+
+            const { leftPx, topPx } = computePosition(
+              slotConfig,
+              deskBounds.widthPx,
+              deskBounds.heightPx,
+              widthPx,
+              heightPx,
+              item.slot_index ?? 0
+            );
+
+            return (
+              <div
+                key={`${item.product_id}-${item.slot_index ?? 0}`}
+                style={{
+                  position: "absolute",
+                  left: `${leftPx}px`,
+                  top: `${topPx}px`,
+                  width: `${widthPx}px`,
+                  height: `${heightPx}px`,
+                  zIndex: slotConfig.z_index,
+                }}
+                className="group cursor-pointer transition-all duration-300 animate-in fade-in zoom-in-95 hover:scale-[1.03]"
+              >
+                {/* Product Composite Placeholder Visual Box */}
+                <div
+                  className={`w-full h-full rounded-xl flex flex-col items-center justify-center p-2 shadow-lg border backdrop-blur-sm transition-shadow ${
+                    item.slot_type === "chair"
+                      ? "bg-slate-800/90 text-white border-slate-700 shadow-slate-900/30"
+                      : item.slot_type === "monitor"
+                      ? "bg-slate-900/95 text-white border-slate-800 shadow-black/40"
+                      : "bg-white/95 text-text-primary border-slate-200 shadow-slate-300/50"
+                  }`}
+                >
+                  {/* Remove Button on Hover */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeItem(product.product_id);
+                    }}
+                    className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-accent-red text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:scale-110"
+                    title={`Remove ${product.name}`}
+                  >
+                    <X className="w-3 h-3 stroke-[3]" />
+                  </button>
+
+                  <div className="text-center font-bold text-xs line-clamp-1 px-1">
+                    {product.name}
+                  </div>
+                  <div className="text-[10px] opacity-75 font-medium">
+                    ${product.price_per_week}/wk
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
+
+        {/* Floor Shadow Under Desk Setup */}
+        <div className="absolute -bottom-6 w-4/5 h-10 bg-black/20 blur-2xl rounded-full pointer-events-none" />
       </div>
 
-      {/* Canvas Hint Badge */}
-      <div className="absolute bottom-6 left-6 hidden sm:flex items-center gap-2 bg-white/80 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/60 shadow-md text-xs text-text-secondary">
-        <span className="w-2 h-2 rounded-full bg-accent-green" />
-        <span>Canvas Stage — Interactive 2D Studio</span>
+      {/* Canvas Summary Footer Label */}
+      <div className="absolute bottom-6 left-6 hidden sm:flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 shadow-md text-xs font-semibold text-text-primary">
+        <Layers className="w-3.5 h-3.5 text-accent-dark" />
+        <span>{placedItems.length + 1} Items Rendered Live</span>
       </div>
     </div>
   );
