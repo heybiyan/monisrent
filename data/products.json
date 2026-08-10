@@ -1,0 +1,79 @@
+[
+  {
+    "product_id": "chair-ergonomic-h2",
+    "name": "Ergonomic Task Chair H2",
+    "category": "furniture",
+    "slot_type": "chair",
+    "price_per_week": 15,
+    "original_price_per_week": 20,
+    "real_width_cm": 65,
+    "real_height_cm": 110,
+    "asset": {
+      "url": "/assets/chair/chair-ergonomic-h2.png",
+      "width_px": 300,
+      "height_px": 500
+    },
+    "stock_status": "available"
+  },
+  {
+    "product_id": "monitor-dell-27",
+    "name": "Dell UltraSharp 27\" 4K Monitor",
+    "category": "monitors",
+    "slot_type": "monitor",
+    "price_per_week": 18,
+    "original_price_per_week": 22,
+    "real_width_cm": 61,
+    "real_height_cm": 45,
+    "asset": {
+      "url": "/assets/monitor/monitor-dell-27.png",
+      "width_px": 400,
+      "height_px": 300
+    },
+    "stock_status": "available"
+  },
+  {
+    "product_id": "monitor-lg-ultrawide-34",
+    "name": "LG UltraWide 34\" Curved Monitor",
+    "category": "monitors",
+    "slot_type": "monitor",
+    "price_per_week": 28,
+    "real_width_cm": 81,
+    "real_height_cm": 46,
+    "asset": {
+      "url": "/assets/monitor/monitor-lg-34.png",
+      "width_px": 500,
+      "height_px": 300
+    },
+    "stock_status": "limited"
+  },
+  {
+    "product_id": "macbook-pro-16",
+    "name": "MacBook Pro 16\" M3 Max",
+    "category": "computer",
+    "slot_type": "accessory",
+    "price_per_week": 35,
+    "real_width_cm": 35,
+    "real_height_cm": 25,
+    "asset": {
+      "url": "/assets/computer/macbook-pro-16.png",
+      "width_px": 250,
+      "height_px": 180
+    },
+    "stock_status": "available"
+  },
+  {
+    "product_id": "mac-studio-m2",
+    "name": "Mac Studio M2 Ultra",
+    "category": "computer",
+    "slot_type": "accessory",
+    "price_per_week": 42,
+    "real_width_cm": 20,
+    "real_height_cm": 20,
+    "asset": {
+      "url": "/assets/computer/mac-studio.png",
+      "width_px": 150,
+      "height_px": 150
+    },
+    "stock_status": "available"
+  }
+]
