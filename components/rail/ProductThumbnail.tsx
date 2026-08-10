@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { clsx } from "clsx";
 import { Badge } from "@/components/ui/Badge";
 import { PriceTag } from "@/components/ui/PriceTag";
+import { SkeletonBlock } from "@/components/ui/SkeletonBlock";
 import { Product, Desk } from "@/lib/catalog";
 import { Plus, Check } from "lucide-react";
 import { useBuilder } from "@/context/BuilderContext";
@@ -16,6 +17,7 @@ type ProductThumbnailProps = {
 
 export function ProductThumbnail({ item }: ProductThumbnailProps) {
   const { selectedDesk, placedItems, addItem, swapDesk } = useBuilder();
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const isDesk = "desk_id" in item;
   const isSelected = isDesk
@@ -77,12 +79,16 @@ export function ProductThumbnail({ item }: ProductThumbnailProps) {
         </Badge>
       </div>
 
-      {/* Thumbnail Asset Placeholder Image Box */}
+      {/* Thumbnail Asset Placeholder / Skeleton Box */}
       <div className="relative w-full h-28 my-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-2 overflow-hidden group-hover:scale-[1.02] transition-transform">
-        <div className="w-16 h-16 rounded-lg bg-gradient-to-tr from-slate-200 to-slate-100 border border-slate-300/60 flex flex-col items-center justify-center text-slate-500 font-bold text-xs shadow-inner gap-0.5">
-          <span>{item.name.slice(0, 3).toUpperCase()}</span>
-          <span className="text-[9px] font-normal text-text-muted">{isDesk ? "DESK" : item.slot_type.toUpperCase()}</span>
-        </div>
+        {!isLoaded ? (
+          <SkeletonBlock className="w-full h-full" />
+        ) : (
+          <div className="w-16 h-16 rounded-lg bg-gradient-to-tr from-slate-200 to-slate-100 border border-slate-300/60 flex flex-col items-center justify-center text-slate-500 font-bold text-xs shadow-inner gap-0.5">
+            <span>{item.name.slice(0, 3).toUpperCase()}</span>
+            <span className="text-[9px] font-normal text-text-muted">{isDesk ? "DESK" : item.slot_type.toUpperCase()}</span>
+          </div>
+        )}
       </div>
 
       {/* Product Details & Pricing */}
