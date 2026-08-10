@@ -37,21 +37,19 @@ export function CanvasStage() {
   };
 
   return (
-    <div className="relative w-full h-[calc(100vh-65px)] min-h-[560px] overflow-hidden bg-gradient-to-br from-slate-100 via-emerald-50/25 to-slate-200/90 flex items-center justify-center p-4 sm:p-8">
-      {/* Studio Ambient Background Lighting */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.85),transparent_75%)] pointer-events-none" />
-
-      {/* Grid Floor Overlay Accent */}
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
+    <div className="relative w-full h-[calc(100vh-65px)] min-h-[560px] overflow-hidden flex items-center justify-center p-4 sm:p-8 bg-slate-900">
+      {/* Realistic Room Scene Background Image */}
+      <img
+        src="/assets/room-bg.jpg"
+        alt="Realistic Room Scene Background"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
       />
 
+      {/* Soft Ambient Depth & Lighting Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-black/5 pointer-events-none" />
+
       {/* Studio Stage Board */}
-      <div className="relative w-full max-w-4xl h-full flex flex-col items-center justify-center p-6 sm:p-12 overflow-visible">
+      <div className="relative w-full max-w-4xl h-full flex flex-col items-center justify-center p-6 sm:p-12 overflow-visible z-10">
         
         {/* Active Desk Container */}
         <div
@@ -163,7 +161,7 @@ export function CanvasStage() {
         </div>
 
         {/* Floor Shadow Under Desk Setup */}
-        <div className="absolute -bottom-6 w-4/5 h-10 bg-black/20 blur-2xl rounded-full pointer-events-none" />
+        <div className="absolute -bottom-6 w-4/5 h-10 bg-black/25 blur-2xl rounded-full pointer-events-none" />
       </div>
     </div>
   );
